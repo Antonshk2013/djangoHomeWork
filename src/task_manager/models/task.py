@@ -6,5 +6,8 @@ from datetime import datetime
 class Task(BaseModel):
     """Задача для выполнения."""
     categories = models.ManyToManyField('Category', related_name='tasks')
-
+    class Meta:
+        db_table = 'task_manager_task'
+        verbose_name = "Task"
+        ordering = ['created_at']
 

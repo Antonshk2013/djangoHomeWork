@@ -17,7 +17,8 @@ class Status(str, Enum):
 
 class BaseModel(models.Model):
     title: str = models.CharField(
-        max_length=255
+        max_length=255,
+        unique=True,
     )
     description: str = models.TextField()
     status: str = models.CharField(
@@ -33,7 +34,7 @@ class BaseModel(models.Model):
         abstract = True
 
     def __str__(self):
-        return f'{self.id} {self.title}'
+        return f'{self.title}'
 
     def __repr__(self):
         return f'{self.__class__.__name__}(id={self.id}, title={self.title})'
