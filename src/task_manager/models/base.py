@@ -12,7 +12,7 @@ class Status(str, Enum):
 
     @classmethod
     def choices(cls):
-        return [(i.name, i.value) for i in cls]
+        return [(i.value, i.value) for i in cls]
 
 
 class BaseModel(models.Model):
@@ -23,7 +23,7 @@ class BaseModel(models.Model):
     description: str = models.TextField()
     status: str = models.CharField(
         max_length=255,
-        choices=Status.choices
+        choices=Status.choices()
     )
     deadline: datetime = models.DateTimeField()
     created_at: datetime = models.DateTimeField(
@@ -34,7 +34,9 @@ class BaseModel(models.Model):
         abstract = True
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.title} {self.status}'
 
     def __repr__(self):
         return f'{self.__class__.__name__}(id={self.id}, title={self.title})'
+
+

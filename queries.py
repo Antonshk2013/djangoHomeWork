@@ -1,0 +1,327 @@
+import os
+import django
+
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+django.setup()
+
+# ИМПОРТЫ НАШЕГО ФУНКЦИОНАЛА ДОЛЖНЫ БЫТЬ СТРОГО ПОСЛЕ СИСТЕМНОЙ НАСТРОЙКИ ВЫШЕ
+from django.utils import timezone
+from datetime import timedelta
+from src.task_manager.models import Task, SubTask
+from src.task_manager.models import Status
+from django.db.models import Q, F
+
+new_sub_task_2 = SubTask.objects.get(title="Create slides")
+new_sub_task_2.description = "Create and format presentation slides"
+
+# new_sub_task_1 = SubTask.objects.get(title="Gather information")
+# new_sub_task_1.deadline = timezone.now()
+
+# task = Task.objects.get(title="Prepare presentation")
+# task.status = Status.IN_PROGRESS.value
+# task.save()
+#
+# print(task.status)
+
+# create
+# new_task = Task.objects.create(
+#     title="Prepare presentation",
+#     description="Prepare materials and slides for the presentation",
+#     status=Status.NEW.value,
+#     deadline=timezone.now()+timedelta(days=3))
+#
+# print(new_task)
+
+#
+# SubTasks для "Prepare presentation":
+# title: "Gather information".
+# description: "Find necessary information for the presentation".
+# status: "New".
+# deadline: Today's date + 2 days.
+# title: "Create slides".
+# description: "Create presentation slides".
+# status: "New".
+# deadline: Today's date + 1 day.
+#
+# new_sub_task_1 = SubTask.objects.create(
+#     title="Gather information",
+#     description="Find necessary information for the presentation",
+#     task=task,
+#     status=Status.NEW.value,
+#     deadline=timezone.now()+timedelta(days=2)
+# )
+# new_sub_task_2 = SubTask.objects.create(
+#     title="Create slides",
+#     description="Create presentation slides",
+#     task=task,
+#     status=Status.NEW.value,
+#     deadline=timezone.now()+timedelta(days=1)
+# )
+#
+# print(new_sub_task_2)
+
+# task_status_new = Task.objects.filter(
+#     status=Status.NEW.value,
+# )
+
+# sub_status_done_overdue = SubTask.objects.filter(Q(status__exact=Status.DONE) & Q(deadline__lte=timezone.now()))
+# print(sub_status_done_overdue)
+from django.db.models.query import QuerySet
+from django.db.models import Q, F
+
+
+# books = Book.objects.all()
+#
+#
+# print(books)
+# print(books[0].title)
+
+
+# pub = User.objects.get(username='ich1')
+# author = Author.objects.get(last_name='Sapkowski')
+# cat = Category.objects.get(pk=4)
+
+# new_book = Book(
+#     title='Test Book from ORM system',
+#     genre=Genre.FANTASY,
+#     pages=215,
+#     publisher=pub,
+#     author=author,
+#     category=cat,
+# )
+#
+# new_book.save()
+
+# print(new_book)
+# print(new_book.title)
+# print(new_book.genre)
+# print(new_book.publisher)
+# print(new_book.author)
+# print(new_book.category)
+
+
+# pub = User.objects.get(username='ich1')
+# author = Author.objects.get(last_name='Sapkowski')
+# cat = Category.objects.get(pk=5)
+#
+# new_book = Book.objects.create(
+#     title='NEW BOOK',
+#     genre=Genre.BIOGRAPHY,
+#     pages=400,
+#     publisher=pub,
+#     author=author,
+#     category=cat,
+# )
+#
+# print(new_book)
+# print(new_book.genre)
+# print(new_book.publisher)
+# print(new_book.author)
+# print(new_book.category)
+
+
+# books: QuerySet = Book.objects.all()
+#
+# print(type(books))
+# print(books)
+#
+# print(books.query)
+#
+# for i in range(5):
+#     print(books[i].title)
+
+# first_book: Book = Book.objects.first()
+#
+# print(first_book)
+
+
+# last_book: Book = Book.objects.last() # The Witcher: The Last Wish
+#
+# print(last_book)
+
+# latest_book: Book = Book.objects.latest() # The Witcher: The Last Wish
+#
+# print(latest_book)
+
+
+# books_count = Book.objects.count()
+#
+# print(f"Кол-во книг в базе = {books_count}")
+
+
+
+
+# books_exists: bool = Book.objects.all().exists()
+#
+# print(f"Набор данных наполнен - {books_exists}")
+
+#
+# books: QuerySet = Book.objects.values(
+#     'title',
+#     'genre',
+#     'published_date',
+#     'language'
+# )
+#
+#
+# print(books.query)
+#
+# for i in range(10):
+#     print(
+#         books[i]['title'],
+#         books[i]['genre'],
+#         books[i]['published_date'],
+#         books[i]['language']
+#     )
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     genre='BIOGRAPHY',
+#     publisher_id=2
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     genre__in=[Genre.FANTASY, Genre.BIOGRAPHY],
+#     publisher_id__in=[17, 25, 35, 43, 50, 20]
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     title__iexact='the' # the The THE
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     title__istartswith='the' # the The THE
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     title__icontains='the' # the The THE
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     pages__gt=250,
+#     pages__lte=500
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     published_date__gt="2023-04-01"
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     description__isnull=True
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     published_date__range=["2023-01-01", "2023-12-31"]
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books.count())
+
+
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     description__isnull=True,
+#     category_id=5
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books.count())
+
+# filtered_books: QuerySet = Book.objects.filter(
+#     Q(description__isnull=True) & ~Q(category_id=5)
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+
+# filtered_books: QuerySet = Post.objects.filter(
+#     ~Q(moderated=True) | (Q(title__istartswith='F') & Q(author_id=21))
+# )
+#
+# print(filtered_books.query)
+# print(filtered_books)
+
+
+
+# req_author: Author = Author.objects.get(
+#     last_name='Sapkowski',
+#     first_name='Andrzej'
+# )
+#
+# print(req_author)
+#
+# print(req_author.rating)
+#
+#
+# req_author.rating = 9.5
+#
+# req_author.save()
+
+
+# req_authors = Author.objects.filter(
+#     rating__lt=8
+# )
+#
+# req_authors.update(rating=8.2)  # UPDATE table SET rating=8.2 WHERE rating < 8;
+#
+# req_authors.update()
+
+
+# req_authors = Author.objects.filter(
+#     rating__lt=8.5
+# )
+#
+# print(req_authors.query)
+#
+# req_authors.update(rating=F('rating') * 0.90)  # UPDATE table SET rating=8.2 WHERE rating < 8;
+#
+# req_authors.update(discounted_price=F('price') * 0.85)
+#
+#
+# Book.objects.filter(
+#     discounted_price__lt=F('price')
+# )
+
+
+# req_obj = Book.objects.get(title='Test Book from ORM system')
+#
+# print(type(req_obj))
+#
+# deleted_obj = req_obj.delete()
+#
+# req_obj.save()

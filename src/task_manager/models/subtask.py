@@ -15,3 +15,7 @@ class SubTask(BaseModel):
         db_table = 'task_manager_subtask'
         ordering = ['created_at']
         verbose_name = 'SubTask'
+
+    @property
+    def short_title(self):
+        return f"{self.title[:10]}..."
