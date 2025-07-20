@@ -1,5 +1,5 @@
 from django.urls import path, include
 
 urlpatterns = [
-    path('new_app/', include('src.new_app.urls')),
+    path('tasks/', include('src.task_manager.urls')),
 ]

@@ -39,4 +39,11 @@ class BaseModel(models.Model):
     def __repr__(self):
         return f'{self.__class__.__name__}(id={self.id}, title={self.title})'
 
+    def to_dict(self):
+        return {field.name: getattr(self, field.name) for field in self._meta.fields}
+
+
+
+
+
 

@@ -11,3 +11,7 @@ class Task(BaseModel):
         verbose_name = "Task"
         ordering = ['created_at']
 
+    @property
+    def short_description(self):
+        return f"{self.description[:20]}..."
+
