@@ -2,7 +2,7 @@ from django.db import DatabaseError, OperationalError
 from django.db.models import Count, Case, When, Value, IntegerField, Sum
 from django.utils.timezone import now
 
-from src.task_manager.repositories import BaseRepository
+from src.common.repositories import BaseRepository
 from src.task_manager.models.task import Task
 
 

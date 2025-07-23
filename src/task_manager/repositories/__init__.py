@@ -1,7 +1,9 @@
-from src.task_manager.repositories.base import BaseRepository
 from src.task_manager.repositories.task import TaskRepository
+from src.task_manager.repositories.category import CategoryRepository
+from src.task_manager.repositories.subtask import SubTaskRepository
 
 __all__ = [
-    "BaseRepository",
     "TaskRepository",
+    "CategoryRepository",
+    "SubTaskRepository",
 ]

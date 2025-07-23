@@ -8,11 +8,12 @@ from src.task_manager.serializers import (
     TaskDetailSerializer,)
 from src.common.services import ServiceResponse, ErrorType
 
+
 class TaskService:
     def __init__(self):
         self.repository = TaskRepository()
 
-    def get_all_tasks(self)-> ServiceResponse:
+    def get_all_tasks(self) -> ServiceResponse:
         try:
             tasks = self.repository.get_all()
             serializer = TaskListSerializer(
@@ -25,7 +26,7 @@ class TaskService:
         except Exception as e:
             return ServiceResponse(
                 success=False,
-                error_type=ErrorType.UNKNOWN_ERROR.value,
+                error_type=ErrorType.UNKNOWN_ERROR,
                 message=str(e)
             )
 
@@ -34,7 +35,7 @@ class TaskService:
         if not serializer.is_valid():
             return ServiceResponse(
                 success=False,
-                error_type=ErrorType.VALIDATION_ERROR.value,
+                error_type=ErrorType.VALIDATION_ERROR,
                 errors=serializer.errors
             )
         try:
@@ -44,13 +45,21 @@ class TaskService:
                 data=task.to_dict()
             )
         except IntegrityError as e:
-            return ServiceResponse(success=False, error_type=ErrorType.INTEGRITY_ERROR, message=str(e))
+            return ServiceResponse(
+                success=False,
+                error_type=ErrorType.INTEGRITY_ERROR,
+                message=str(e))
         except DatabaseError as e:
-            return ServiceResponse(success=False, error_type=ErrorType.UNKNOWN_ERROR, message=str(e))
+            return ServiceResponse(
+                success=False,
+                error_type=ErrorType.UNKNOWN_ERROR,
+                message=str(e))
 
     def get_task(self, task_id: str) -> ServiceResponse:
         try:
-            task = self.repository.get_by_id(id_=task_id)
+            task = self.repository.get_by_id(
+                id_=task_id
+            )
             serializer = TaskDetailSerializer(task)
             return ServiceResponse(
                 success=True,
@@ -59,19 +68,19 @@ class TaskService:
         except ObjectDoesNotExist as e:
             return ServiceResponse(
                 success=False,
-                error_type=ErrorType.NOT_FOUND.value,
+                error_type=ErrorType.NOT_FOUND,
                 errors=str(e)
             )
         except IntegrityError as e:
             return ServiceResponse(
                 success=False,
-                error_type=ErrorType.INTEGRITY_ERROR.value,
+                error_type=ErrorType.INTEGRITY_ERROR,
                 errors=str(e)
             )
         except DatabaseError as e:
             return ServiceResponse(
                 success=False,
-                error_type=ErrorType.UNKNOWN_ERROR.value,
+                error_type=ErrorType.UNKNOWN_ERROR,
                 errors=str(e)
             )
 
@@ -85,7 +94,7 @@ class TaskService:
         except Exception as e:
             return ServiceResponse(
                 success=False,
-                error_type=ErrorType.UNKNOWN_ERROR.value,
+                error_type=ErrorType.UNKNOWN_ERROR,
                 message=str(e)
             )
 
