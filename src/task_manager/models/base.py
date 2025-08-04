@@ -5,7 +5,7 @@ from django.db import models
 
 class Status(str, Enum):
     NEW = "New"
-    IN_PROGRESS = "In progress"
+    IN_PROGRESS = "In_progress"
     PENDING = "Pending"
     BLOCKED = "Blocked"
     DONE = "Done"
@@ -18,7 +18,7 @@ class Status(str, Enum):
 class BaseModel(models.Model):
     title: str = models.CharField(
         max_length=255,
-        unique=True,
+        unique=False,
     )
     description: str = models.TextField()
     status: str = models.CharField(
