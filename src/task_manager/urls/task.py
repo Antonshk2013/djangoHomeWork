@@ -1,13 +1,11 @@
 from django.urls import path
 from src.task_manager.views import (
-    # get_all_tasks,
-    # get_task,
-    # get_task_report,
-    TaskListApiView)
+    get_task_report,
+    TaskListApiView,
+    TaskDetailApiView)
 
 urlpatterns = [
     path('', TaskListApiView.as_view()),
-    # path('', get_all_tasks),
-    # path('<int:task_id>/', get_task),
-    # path('report/', get_task_report)
+    path('<int:task_id>/', TaskDetailApiView.as_view()),
+    path('report/', get_task_report)
 ]

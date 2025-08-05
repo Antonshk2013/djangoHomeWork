@@ -1,20 +1,18 @@
 from src.task_manager.views.task import (
-    # get_all_tasks,
-    # get_task,
-    # get_task_report,
-    TaskListApiView
+    TaskListApiView,
+    TaskDetailApiView,
+    get_task_report
 )
 from src.task_manager.views.subtask import (
-    SubTaskListCreateView,
-    SubTaskDetailUpdateDeleteView,
+    SubTaskListApiView,
+    SubTaskDetailApiView,
 )
 
 __all__ = [
-    # "get_all_tasks",
-    # "get_task",
-    # "get_task_report",
+    "get_task_report",
     "TaskListApiView",
+    "TaskDetailApiView",
 
-    "SubTaskListCreateView",
-    "SubTaskDetailUpdateDeleteView",
+    "SubTaskListApiView",
+    "SubTaskDetailApiView",
 ]
