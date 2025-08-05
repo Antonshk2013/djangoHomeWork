@@ -10,29 +10,26 @@ def validate_name(name):
         raise serializers.ValidationError("Category already exists")
 
 
-class CategoryCreateSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(
-        max_length=255,
-        validators=[
-            validate_name
-        ]
-    )
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+        ]
 
-    def create(self, validated_data):
-        try:
-            repository = CategoryRepository()
-            category = repository.create(validated_data)
-            return category
-        except Exception as e:
-            raise serializers.ValidationError(str(e))
-
-    def update(self, instance, validated_data):
-        try:
-            repository = CategoryRepository()
-            update_category = repository.update(instance, **validated_data)
-            return update_category
-        except Exception as e:
-            raise serializers.ValidationError(str(e))
+    # def create(self, validated_data):
+    #     try:
+    #         repository = CategoryRepository()
+    #         category = repository.create(validated_data)
+    #         return category
+    #     except Exception as e:
+    #         raise serializers.ValidationError(str(e))
+    #
+    # def update(self, instance, validated_data):
+    #     try:
+    #         repository = CategoryRepository()
+    #         update_category = repository.update(instance, **validated_data)
+    #         return update_category
+    #     except Exception as e:
+    #         raise serializers.ValidationError(str(e))
