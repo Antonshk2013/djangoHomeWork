@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import sys
 from pathlib import Path
 from environ import Env
 
@@ -146,4 +146,52 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+}
+
+LOGGING_ROOT = BASE_DIR / 'logs'
+LOGGING_ROOT.mkdir(parents=True, exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'http_formatter': {
+            'format': '%(name)s [%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }
+    },
+    'handlers': {
+        'console_log': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'http_formatter',
+        },
+        'http_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': LOGGING_ROOT / 'http_logs.log',
+            'formatter': 'http_formatter',
+        },
+        'db_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': LOGGING_ROOT / 'db_logs.log',
+            'formatter': 'http_formatter',
+        },
+    },
+    'loggers': {
+        'django.server': {
+            'handlers': ['http_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['db_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['console_log'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    }
 }
