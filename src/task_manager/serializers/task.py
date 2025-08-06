@@ -42,6 +42,7 @@ class TaskCreateSerializer(serializers.ModelSerializer):
             validate_deadline_field
         ]
     )
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Task
         fields = ('__all__')

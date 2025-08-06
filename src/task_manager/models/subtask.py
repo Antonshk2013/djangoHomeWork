@@ -1,7 +1,9 @@
 from django.db import models
-from src.task_manager.models.base import Status, BaseModel
-from datetime import datetime
+from django.contrib.auth import get_user_model
 
+from src.task_manager.models.base import Status, BaseModel
+
+User = get_user_model()
 
 class SubTask(BaseModel):
     """Отдельная часть основной задачи (Task)"""
@@ -10,6 +12,10 @@ class SubTask(BaseModel):
         on_delete=models.CASCADE,
         related_name='subtasks'
     )
+    owner = models.ForeignKey(User,
+                              null=True,
+                              on_delete=models.CASCADE,
+                              related_name='sub_tasks')
 
     class Meta:
         db_table = 'task_manager_subtask'

@@ -16,6 +16,9 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
     @action(detail=True, methods=['get'])
     def count_tasks(self, request, pk=None):

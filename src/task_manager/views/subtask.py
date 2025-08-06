@@ -12,6 +12,7 @@ from rest_framework.permissions import (
 from src.task_manager.services import SubTaskService
 from src.task_manager.serializers import SubTaskCreateSerializer
 from src.task_manager.filters import SubTaskFilter
+from src.task_manager.permissions import IsOwner
 
 
 class SubTaskListApiView(ListCreateAPIView):
@@ -25,6 +26,12 @@ class SubTaskListApiView(ListCreateAPIView):
     ordering = ['title']
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
 
 class SubTaskDetailApiView(RetrieveUpdateDestroyAPIView):
     service = SubTaskService()
@@ -32,4 +39,5 @@ class SubTaskDetailApiView(RetrieveUpdateDestroyAPIView):
     serializer_class = SubTaskCreateSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'subtask_id'
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwner]
+

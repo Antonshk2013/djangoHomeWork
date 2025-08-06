@@ -14,6 +14,7 @@ from rest_framework.permissions import (
 from src.task_manager.filters import TaskFilter
 from src.task_manager.services import TaskService
 from src.task_manager.serializers import TaskSerializer
+from src.task_manager.permissions import IsOwner
 
 
 class TaskListApiView(ListCreateAPIView):
@@ -30,6 +31,11 @@ class TaskListApiView(ListCreateAPIView):
     ordering = ['title']
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
 
 class TaskDetailApiView(RetrieveUpdateDestroyAPIView):
     service = TaskService()
@@ -37,7 +43,9 @@ class TaskDetailApiView(RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'task_id'
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwner]
+
+
 
 @api_view(['GET'])
 def get_task_report(request: Request) -> Response:

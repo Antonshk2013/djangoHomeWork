@@ -13,8 +13,9 @@ class SubTaskCreateSerializer(serializers.ModelSerializer):
         validators=[
             validate_deadline_field
         ]
-
     )
+    owner = serializers.ReadOnlyField(source='owner.username')
+
     class Meta:
         model = SubTask
         fields = '__all__'
