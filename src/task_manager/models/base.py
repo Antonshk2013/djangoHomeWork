@@ -1,6 +1,7 @@
 from datetime import datetime
 from enum import Enum
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Status(str, Enum):
@@ -20,7 +21,7 @@ class BaseModel(models.Model):
         max_length=255,
         unique=False,
     )
-    description: str = models.TextField()
+    description: str = CKEditor5Field('Text', config_name='default')
     status: str = models.CharField(
         max_length=255,
         choices=Status.choices()

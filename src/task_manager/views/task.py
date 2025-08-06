@@ -6,6 +6,10 @@ from rest_framework.generics import (ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView)
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.permissions import (
+    IsAuthenticated,
+    DjangoModelPermissions
+)
 
 from src.task_manager.filters import TaskFilter
 from src.task_manager.services import TaskService
@@ -24,6 +28,7 @@ class TaskListApiView(ListCreateAPIView):
     ]
     ordering_fields = ['created_at']
     ordering = ['title']
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
 
 class TaskDetailApiView(RetrieveUpdateDestroyAPIView):
@@ -32,7 +37,7 @@ class TaskDetailApiView(RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'task_id'
-
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
 @api_view(['GET'])
 def get_task_report(request: Request) -> Response:
