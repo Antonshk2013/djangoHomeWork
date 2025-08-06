@@ -11,7 +11,6 @@ def validate_name(name):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Category
         fields = [

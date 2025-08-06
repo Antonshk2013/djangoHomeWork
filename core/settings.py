@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'django_ckeditor_5',
+    'drf_yasg',
     'src.new_app.apps.NewAppConfig',
     'src.task_manager.apps.TaskManagerConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -199,4 +201,16 @@ CKEDITOR_5_CONFIGS = {
         ],
         'language': 'en',
     }
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'description': 'JWT Authorization',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'USE_SESSION_AUTH': False,
 }
