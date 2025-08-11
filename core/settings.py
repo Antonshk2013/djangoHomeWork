@@ -75,6 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 if env.bool('USE_REMOTE_DB'):
     DATABASES = {
