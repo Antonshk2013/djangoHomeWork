@@ -1,5 +1,7 @@
 from django.urls import path, include
 
 urlpatterns = [
-    path('new_app/', include('src.new_app.urls')),
+    path('', include('src.task_manager.urls')),
+    path('custom_auth/', include('src.users.urls')),
+
 ]
