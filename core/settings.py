@@ -36,10 +36,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'django_ckeditor_5',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
     'src.new_app.apps.NewAppConfig',
     'src.task_manager.apps.TaskManagerConfig',
-
+    'src.users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'src.users.jwt_middleware.JWTAuthMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
